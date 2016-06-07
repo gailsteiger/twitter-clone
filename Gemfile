@@ -2,9 +2,13 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 0.15'
+# gem 'rails', '4.2.6'
+# # Use postgresql as the database for Active Record
+# gem 'pg', '~> 0.15'
+
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -20,6 +24,10 @@ gem 'react-rails', '~> 1.4.0'
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+
+# devise for authentication
+gem 'devise'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 

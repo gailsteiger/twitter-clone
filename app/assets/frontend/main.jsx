@@ -1,22 +1,37 @@
 import TweetBox from './components/TweetBox';
 import TweetsList from './components/TweetsList';
 
-let mockTweets = [
-    { id: 1, name: 'Gail Steiger', body: 'My #FirstTweet'},
-    { id: 2, name: 'Gail Steiger', body: 'My #SecondTweet'},
-    { id: 3, name: 'Gail Steiger', body: 'My #ThirdTweet'}
-];
+let mockTweets = [];
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = { tweetsList: mockTweets };
     }
+    formattedTweets(tweetsList) {
+        let formattedList = tweetsList.map(tweet => {
+            tweet.formattedDate = moment(tweet.created_at).fromNow();
+            return tweet;
+        });
+        return {
+            tweetsList: formattedList
+        }
+    }
     addTweet(tweetToAdd) {
-        let newTweetsList = this.state.tweetsList;
-        newTweetsList.unshift({ id: Date.now(), name: 'Guest', body: tweetToAdd });
 
-        this.setState({ tweetsList: newTweetsList });
+        $.post('/tweets', { body: tweetToAdd })
+            .success( savedTweet => {
+                let newTweetsList = this.state.tweetsList;
+                newTweetsList.unshift( savedTweet );
+
+                this.setState(this.formattedTweets(newTweetsList) );
+            })
+            .error(error => console.log(error));
+    }
+    componentDidMount() {
+        $.ajax("/tweets")
+            .success(data => this.setState(this.formattedTweets(data)))
+            .error(error => console.log(error));
     }
     render() {
         return (
@@ -30,10 +45,11 @@ class Main extends React.Component {
 
 
 let documentReady = () => {
-    React.render(
-        <Main />,
-        document.getElementById('react')
-    )
+    let reactNode = document.getElementById('react');
+    if(reactNode) {
+        React.render(<Main />, reactNode);
+    }
+
 };
 
 $(documentReady);

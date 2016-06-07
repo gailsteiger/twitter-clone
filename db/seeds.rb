@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Tweet.create(user_id: 1, body: 'Hello Ruby!')
+Tweet.create(user_id: 1, body: 'Hello Rails!')
