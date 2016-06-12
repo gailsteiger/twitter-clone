@@ -1,11 +1,10 @@
 import AppDispatcher from '../dispatcher';
 import ActionTypes from '../constants';
-import { EventEmitter } from 'events';
+import AppEventEmitter from './AppEventEmitter';
 
 let _tweets = [];
-const CHANCE_EVENT = "CHANGE";
 
-class TweetEventEmitter extends EventEmitter {
+class TweetEventEmitter extends AppEventEmitter {
     formattedTweets(tweetsList) {
         let formattedList = tweetsList.map(tweet => {
             tweet.formattedDate = moment(tweet.created_at).fromNow();
@@ -21,18 +20,6 @@ class TweetEventEmitter extends EventEmitter {
             tweet.formattedDate = moment(tweet.created_at).fromNow();
             return tweet;
         });
-    }
-
-    emitChange() {
-        this.emit(CHANCE_EVENT);
-    }
-
-    addChangeListener(callback) {
-        this.on(CHANCE_EVENT, callback);
-    }
-
-    removeChangeListener(callback) {
-        this.removeChangeListener(CHANCE_EVENT, callback);
     }
 }
 
